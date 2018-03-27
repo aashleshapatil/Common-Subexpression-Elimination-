@@ -9,6 +9,7 @@ Specification
 In this project, you will implement Common Subexpression Elimination plus a few other simple optimizations.  I’ll describe each of them below.
 
 •	Common Subexpression Elimination
+
 o	For each instruction, eliminate all other instructions which are literal matches:
 			Same opcode
 			Same type (LLVMTypeOf of the instruction not its operands)
@@ -16,16 +17,18 @@ o	For each instruction, eliminate all other instructions which are literal match
 			Same operands in the same order (no commutativity)
 o	Do not consider Loads, Stores, Terminators, VAArg, Calls, Allocas, and FCmps for elimination.
 o	To avoid implementation complexity, I recommend using a nested loop (it may actually involve recursion on the dominator tree)
-	
 o	Create a counter of all instructions you eliminate here and call it CSE_Basic.  You will dump this to standard output at the end of your pass.
+	
 	•	Optimization 0: Eliminate dead instructions
 		o	While you visit each instruction, check if it is dead.
 		o	If so, remove the instruction.
 		o	Count these simplifications as CSE_Dead.
+		
 	•	Optimization 1: Simplify Instructions
 		o	While you visit each instruction, check if it can be simplified through simple constant folding.
 		o	Use the InstructionSimplify function that I’ve provided in transform.h.  For C++, call the SimplifyInstruction function directly.
 		o	Count these simplifications as CSE_Simplify.
+		
 	•	Optimization 2: Eliminate Redundant Loads
 		o	While traversing the instructions in a single basic block, if you come across a load we will look to see if there are redundant loads within the same basic block only.
 		o	You may only eliminate a later load as redundant if the later load is not volatile, it loads the same address, it loads the same type operand, and there are no intervening stores or calls to any address.
